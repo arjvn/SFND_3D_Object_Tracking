@@ -14,8 +14,8 @@ void matchBoundingBoxes(std::vector<cv::DMatch> &matches, std::map<int, int> &bb
 
 void show3DObjects(std::vector<BoundingBox> &boundingBoxes, cv::Size worldSize, cv::Size imageSize, bool bWait=true);
 
-void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPoint> &kptsCurr,
-                      std::vector<cv::DMatch> kptMatches, double frameRate, double &TTC, cv::Mat *visImg=nullptr);
-void computeTTCLidar(std::vector<LidarPoint> &lidarPointsPrev,
-                     std::vector<LidarPoint> &lidarPointsCurr, double frameRate, double &TTC);                  
+void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPoint> &kptsCurr, std::vector<cv::DMatch> kptMatches, double frameRate, double &TTC, std::vector<double> &TTC_Array, int image, cv::Mat *visImg=nullptr);
+void computeTTCLidar(std::vector<LidarPoint> &lidarPointsPrev, std::vector<LidarPoint> &lidarPointsCurr, double frameRate, double &TTC, std::vector<double> &TTC_Array, std::vector<double> &TTCLidar_delta_d, std::vector<double> &TTCLidar_dist, std::vector<double> &TTCLidar_velocity, int image);
+std::vector<LidarPoint> PlaneRansac(std::vector<LidarPoint> lidarPoints, int maxIterations, float distanceTol, int image);
+
 #endif /* camFusion_hpp */
