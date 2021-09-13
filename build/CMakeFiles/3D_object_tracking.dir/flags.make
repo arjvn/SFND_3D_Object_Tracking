@@ -4,7 +4,7 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /usr/local/Cellar/opencv/4.5.2_4/include/opencv4
+CXX_INCLUDES = -isystem /usr/local/Cellar/opencv/4.5.3_2/include/opencv4
 
 CXX_FLAGS =  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk   -std=c++11 -std=gnu++11
 

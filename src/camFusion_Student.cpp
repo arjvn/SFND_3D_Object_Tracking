@@ -302,8 +302,8 @@ void matchBoundingBoxes(std::vector<cv::DMatch> &matches, std::map<int, int> &bb
           std::cout << "\n";
       }
   };
-  std::cout << "Final match-keypoint matrix:\n";
-  matrix_print(keypnt_box_match_matrix);
+  // std::cout << "Final match-keypoint matrix:\n";
+  // matrix_print(keypnt_box_match_matrix);
 
   auto row_col_zero = [](cv::Mat &mat, int row, int col) {
       for (int col = 0; col < mat.cols; col++) { //zero row
