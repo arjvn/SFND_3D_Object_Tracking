@@ -219,8 +219,36 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
   }
 
   double mean_sum_kpt_ratio = sum_kpt_ratios/ N;
-  // std::cout << mean_sum_kpt_ratio << "   " << sum_kpt_ratios << "   "<< N << '\n';
-  TTC = (-1.0/frameRate)/(1.0-mean_sum_kpt_ratio);
+  double standardDeviation;
+  vector<double> kpt_ratios_filtered;
+
+  for(double &it: kpt_ratios) {
+    standardDeviation += pow(it - mean_sum_kpt_ratio, 2);
+  }
+  standardDeviation = std::sqrt( standardDeviation / (N - 1) );
+  for(double &it: kpt_ratios) {
+    if (std::abs(it - mean_sum_kpt_ratio) < 2.0 * standardDeviation) {
+      kpt_ratios_filtered.push_back(it);
+    }
+  }
+
+  // std::cout << "size of array: "<< kpt_ratios.size() << '\n';
+  // std::cout << "size of array (filtered): "<< kpt_ratios_filtered.size() << '\n';
+
+  std::sort(kpt_ratios_filtered.begin(), kpt_ratios_filtered.end());
+  double kpt_ratios_medianIdx = floor(kpt_ratios_filtered.size() / 2.0);
+  double median_kpt_ratio;
+
+  if (kpt_ratios_filtered.size() % 2 == 0) {
+    median_kpt_ratio = kpt_ratios_filtered[kpt_ratios_medianIdx];
+  }
+  else {
+    median_kpt_ratio = (kpt_ratios_filtered[kpt_ratios_medianIdx] + kpt_ratios_filtered[kpt_ratios_medianIdx - 1]) / 2;
+  }
+
+  // std::cout << "mean_kpt_ratio: " << mean_sum_kpt_ratio << '\n';
+  // std::cout << "median_kpt_ratio: " << median_kpt_ratio << '\n';
+  TTC = (-1.0/frameRate)/(1.0 - median_kpt_ratio);
   TTC_Array.push_back(TTC);
   std::cout << "      Camera TTC: " << TTC << '\n';
 }

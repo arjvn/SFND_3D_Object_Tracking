@@ -101,7 +101,7 @@ int main(int argc, const char *argv[]) {
 
   // Matching Parameters
   vector<cv::DMatch> matches;
-  string matcherType = "MAT_BF";        // MAT_BF, MAT_FLANN
+  string matcherType = "MAT_FLANN";        // MAT_BF, MAT_FLANN
   string descriptorType = "DES_BINARY"; // DES_BINARY, DES_HOG
   string selectorType = "SEL_KNN";       // SEL_NN, SEL_KNN
 
@@ -251,8 +251,8 @@ int main(int argc, const char *argv[]) {
 
       // std::cout << matches.size() << " matches found." << '\n';
 
-      bVis = false;
-      if (bVis) { // Visulise keypoint mathces
+      bVis = false; // Visulise keypoint mathces
+      if (bVis) {
           cv::Mat matchImg = ((dataBuffer.end() - 1)->cameraImg).clone();
           cv::drawMatches((dataBuffer.end() - 2)->cameraImg, (dataBuffer.end() - 2)->keypoints,
                           (dataBuffer.end() - 1)->cameraImg, (dataBuffer.end() - 1)->keypoints,

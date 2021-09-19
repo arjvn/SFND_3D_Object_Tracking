@@ -7,19 +7,18 @@ using namespace std;
 void matchDescriptors(std::vector<cv::KeyPoint> &kPtsSource, std::vector<cv::KeyPoint> &kPtsRef, cv::Mat &descSource, cv::Mat &descRef,
                       std::vector<cv::DMatch> &matches, std::string descriptorName, std::string descriptorType, std::string matcherType, std::string selectorType) {
     // configure matcher
-    bool crossCheck = false;
+    bool crossCheck = true;
     cv::Ptr<cv::DescriptorMatcher> matcher;
-
     if (matcherType.compare("MAT_BF") == 0) {
       int normType = descriptorType.compare("DES_BINARY") == 0 ? cv::NORM_HAMMING : cv::NORM_L2;
       if(descriptorName.compare("SIFT") == 0 && normType == cv::NORM_HAMMING){
-          // cout << "The descriptor SIFT is not compatible with hamming distance (DES_BINARY)... falling back to L2 norm." << endl;
+          cout << "The descriptor SIFT is not compatible with hamming distance (DES_BINARY)... falling back to L2 norm." << endl;
           normType = cv::NORM_L2;
       }
         matcher = cv::BFMatcher::create(normType, crossCheck);
     }
     else if (matcherType.compare("MAT_FLANN") == 0) {
-      // std::cout << "FLANN matching" << '\n';
+      std::cout << "FLANN matching" << '\n';
       if (descSource.type() != CV_32F) {
         descSource.convertTo(descSource, CV_32F);
       }
